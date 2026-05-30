@@ -1,0 +1,4 @@
+../Core/Src/freertos.c:73:6:speed_callback	24	static
+../Core/Src/freertos.c:79:6:dir_callback	24	static
+../Core/Src/freertos.c:90:6:servo_callback	24	static
+../Core/Src/freertos.c:115:6:StartMicroROSTask	264	static
