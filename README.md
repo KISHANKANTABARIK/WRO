@@ -1,3 +1,21 @@
+# 🏎️ DeusMachina: WRO 2026 Future Engineers
+
+> **Autonomous Self-Driving Vehicle Architecture for the World Robot Olympiad 2026**
+
+![ROS 2](https://img.shields.io/badge/ROS_2-Humble-34a853?style=flat&logo=ros)
+![Ubuntu](https://img.shields.io/badge/Ubuntu-22.04_LTS-E95420?style=flat&logo=ubuntu)
+![STM32](https://img.shields.io/badge/STM32-Nucleo_F446RE-03234B?style=flat)
+![FreeRTOS](https://img.shields.io/badge/RTOS-FreeRTOS-22314E?style=flat)
+
+This repository contains the complete software stack for Team **DeusMachina**. The vehicle features a distributed computing architecture, utilizing a Raspberry Pi 4 for high-level perception (Computer Vision, LiDAR mapping, State Logic) and an STM32 microcontroller via micro-ROS for deterministic, real-time hardware control.
+
+---
+
+## 🗺️ System Architecture Graph
+
+This diagram illustrates our distributed Node graph, showing the flow of data from physical sensors, through the ROS 2 Humble network, and down to the hardware actuators.
+
+```mermaid
 graph TD
   %% Define Styles
   classDef pi fill:#e83e8c,stroke:#fff,stroke-width:2px,color:#fff;
@@ -6,7 +24,7 @@ graph TD
   classDef topic fill:#ffc107,stroke:#333,color:#000;
 
   subgraph PI4 [Raspberry Pi 4 - ROS 2 Humble]
-    subgraph Sensors_Pi [Pi Hardware]
+    subgraph Sensors_Pi [High-Bandwidth Hardware]
       cam[Studica 3D Depth Cam]:::hardware
       lidar[Studica 360 LiDAR 70500]:::hardware
       imu[I2C IMU Sensor]:::hardware
