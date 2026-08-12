@@ -43,12 +43,17 @@ This has been an incredible journey with a lot of obstacles, and we have done ou
 - **[Swastik Prasad Behera]**:
 
 ![Member 2 photo](./t-photos/member2.jpeg)
-> My name is Swastik Prasad Behera. I am the team's Designer and I'm responsible for Mechanical Designing.
+> Hello, I am Swastik Prasad Behera. I am the team's Designer and I'm responsible for Mechanical Designing and Assembly.
 
 - **[Mohit Kumar Bera]**:
 
 ![Mohit Kumar Bera](./t-photos/member3.jpeg)
 > I am Mohit Kumar Bera, the team's Electronics Engineering. I am in charge of Electronics circuits and wiring. 
+
+- **[Achirangshu Patra ]**:
+
+![Mentor photo](./t-photos/mentor.jpeg)
+> Hi, my name is Achirangshu Patra . I have received the B.Tech. degree in Electrical Engineering from Budge Budge Institute of Technology, West Bengal, India, the Post Diploma in Industrial Automation and Robotics from MSME CTTC, Bhubaneswar, India, and the M.Tech. degree in Mechatronics Engineering from C.V. Raman Global University, Odisha, India. He also received the Post Graduate Certificate in Artificial Intelligence and Its Applications under the AICTE QIP program from the Indian Institute of Technology Kharagpur, India. He is currently pursuing the Ph.D. degree in federated unlearning for privacy-preserving machine learning in distributed edge systems at C.V. Raman Global University, where he is also an Assistant Professor and heads the Mitsubishi Electric Authorized Training Centre. He has conducted industrial training and technical workshops for professionals, faculty members, university and school students, covering industrial automation, PLC, HMI, drives, robotics, mechatronics, and Industry 4.0 technologies, with participants from organizations including JPL, JSP, Tata Motors, and other industrial institutions. He has served as a Jury Member for the India Skills National and Regional Competitions and as a WorldSkills Mentor for Industrial Control and Industry 4.0. He also mentors students in various technical competitions and hackathons, including the Mitsubishi Electric Cup, Janatics Automation Skill Challenge, and Smart India Hackathon, supporting students in project development, innovation, and competitive technical skills. His research interests include federated learning, machine unlearning, differential privacy, privacy-preserving edge intelligence, industrial automation, and intelligent cyber-physical systems. 
 
 ---
 
