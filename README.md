@@ -54,13 +54,48 @@ This has been an incredible journey with a lot of obstacles, and we have done ou
 
 # Hardware Design
 
-## Design Process
+## Drivetrain Selection: All-Wheel Drive (4WD) — Single-Motor Dual-Differential System
 
-Describe the overall hardware architecture here: what the robot is composed of (3D printed parts, off-the-shelf components, chassis type, drivetrain, etc.), and the key design decisions made along the way.
+### Design Overview
 
-> Example: *The robot is composed of a combination of 3D printed parts for most of its structure, [wheel type], and the electronics that give the robot its functionality.*
+Unlike a conventional 4WD setup that uses one motor per axle or per wheel, our robot uses a **single central motor driving all four wheels through a two-differential, single-axle transmission system**. This keeps the drivetrain compact, reduces the number of motors (and therefore the current draw and control complexity), while still delivering torque to all four wheels.
 
-Document major design iterations/changes chronologically, each with a short explanation of **what changed** and **why**:
+### How the System Works
+
+1. **Motor & Central Gearbox** — A single DC gear motor is mounted in-line with a central gearbox/transfer case (the black housing in the middle of the assembly). This gearbox receives the motor's output and reduces/redirects it into a longitudinal drive path.
+
+2. **Central Driveshaft** — From the gearbox, a single output shaft (the long center driveshaft) runs the length of the chassis, connecting the front and rear ends of the drivetrain. This shaft is what allows one motor to power both axles simultaneously, similar in principle to a propeller shaft in a full-size AWD vehicle.
+
+3. **Dual Differential Units** — At each end of the central driveshaft sits a **bevel-gear differential** (the two purple/magenta gear clusters — one front, one rear). Each differential takes the rotational input from the central shaft and splits it 90° outward to the left and right wheel axles on that end.
+
+4. **Differential Function** — Because each end has its own differential, the left and right wheels on that axle can rotate at slightly different speeds during a turn (standard differential behavior), preventing wheel scrub while still keeping both wheels driven — something a solid/fixed axle can't do.
+
+5. **Half-Shafts to Wheels** — From each differential, a short half-shaft (with a universal/CV-style joint visible in the model) transmits power outward to each wheel hub, ending in a hex adapter for the wheel.
+
+### Why This Configuration
+
+- **Single point of power input** — only one motor needs to be controlled, driven, and powered, which simplifies the motor driver wiring and current budgeting compared to a 4-motor independent-wheel setup.
+- **True mechanical AWD** — because power is split at the differential (not electronically per motor), all four wheels stay mechanically synchronized, avoiding the wheel-speed mismatches that can occur with independently controlled motors that aren't perfectly tuned to each other.
+- **Weight and space savings** — replacing 3–4 motors with one central motor and a geared/shaft transmission frees up space and mass elsewhere in the chassis for electronics, sensors, and battery placement.
+- **Consistent traction front and rear** — since both axles are driven from the same source through matched differentials, torque delivery to the front and rear wheels stays proportional, improving stability under acceleration and through corners.
+
+### Trade-offs
+
+- **Mechanical complexity** — two differentials plus a central driveshaft and multiple universal joints introduce more moving/wearing parts than a single-motor RWD or independent-motor 4WD setup, and require tighter manufacturing/assembly tolerances (gear mesh, shaft alignment).
+- **No independent wheel control** — because all wheels are mechanically linked through one motor, the robot cannot apply differential torque electronically (e.g., for skid-steer-style turning assistance); steering must still be handled entirely by the separate front Ackermann steering system.
+- **Single point of failure** — if the motor, central gearbox, or driveshaft fails, the entire drivetrain is disabled, unlike a multi-motor 4WD where one motor failure might still leave partial mobility.
+- **Assembly precision** — bevel gear differentials need careful backlash tuning; too much play causes drivetrain slop, too little causes binding and excess motor load.
+
+### Comparison with Common WRO Drive Systems
+
+Most WRO Future Engineers teams use one of a handful of drivetrain patterns. Here's how our AWD choice stacks up against the alternatives most commonly seen in the competition:
+
+| Drive System | How it Works | Pros | Cons | Typical WRO Use |
+|---|---|---|---|---|
+| **Rear-Wheel Drive (RWD)** — *most common in WRO* | A single motor (often a "hex"/gear motor) drives the rear axle; front wheels are steered via a servo through an Ackermann linkage and are not powered. | Simple, lightweight, cheap, few failure points, easy to tune and repair mid-competition. | Less traction on low-grip surfaces or sharp accelerations; all propulsion load falls on two wheels. | The default choice for the large majority of Future Engineers robots, including earlier iterations of our own robot (see [Design Process](#design-process)). |
+| **Front-Wheel Drive (FWD)** | A single motor drives the front (steered) axle. | Simplifies packaging when the drive motor and steering share the front module. | Steering geometry becomes more complex (powered + steered wheels); traction can suffer when weight shifts rearward under acceleration. | Rare in WRO — most teams avoid combining steering and driving on the same axle due to added mechanical complexity. |
+| **All-Wheel Drive (4WD)** — *our system* | Torque delivered to all four wheels, either through a differential + shaft or independent motors per wheel/axle, while front wheels still steer via Ackermann linkage or independent steering. | Best traction and acceleration consistency; more even load distribution; more resistant to wheel-slip on debris or uneven mats. | Heavier, higher current draw, more complex wiring/mechanical design, more to debug. | Used by a minority of teams, usually those prioritizing consistent lap times over simplicity, or where the track surface/rules reward extra grip. |
+| **Skid-Steer / Differential Drive (2WD, no Ackermann)** | Two independently driven wheels (usually rear or side pairs) with passive casters or a fixed axle; turning is achieved by varying wheel speed rather than steering angle. | Mechanically simple, no steering linkage needed, sharp/zero-radius turns possible. | Not Ackermann-compliant, causes wheel scrub, and is generally disallowed or heavily penalized for realism in Future Engineers, which expects car-like steering. | Essentially not used in Future Engineers (more common in other WRO categories like RoboMission); mentioned here only for contrast. |
 
 1. **[Change 1 — e.g. Motor upgrade]**: Explain the problem with the old approach and why the new component/approach was chosen.
 
