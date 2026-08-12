@@ -1,80 +1,51 @@
-# 🏎️ DeusMachina: WRO 2026 Future Engineers
+# WRO Future Engineers 2026 - [Your Team Name]
 
-> **Autonomous Self-Driving Vehicle Architecture for the World Robot Olympiad 2026**
-
-![ROS 2](https://img.shields.io/badge/ROS_2-Humble-34a853?style=flat&logo=ros)
-![Ubuntu](https://img.shields.io/badge/Ubuntu-22.04_LTS-E95420?style=flat&logo=ubuntu)
-![STM32](https://img.shields.io/badge/STM32-Nucleo_F446RE-03234B?style=flat)
-![FreeRTOS](https://img.shields.io/badge/RTOS-FreeRTOS-22314E?style=flat)
-
-This repository contains the complete software stack for Team **DeusMachina**. The vehicle features a distributed computing architecture, utilizing a Raspberry Pi 4 for high-level perception (Computer Vision, LiDAR mapping, State Logic) and an STM32 microcontroller via micro-ROS for deterministic, real-time hardware control.
+## 1. System Architecture
+Our robot uses a hierarchical control pipeline:
+* **High-Level Controller:** Raspberry Pi 4 running ROS 2 (Humble/Foxy) and the `micro_ros_agent`.
+* **Low-Level Microcontroller:** STM32F446RE running micro-ROS over UART/USB to generate high-frequency PWM signals.
+* **Actuation:**
+  * DC Motor driven via BTS7960 High-Current H-Bridge Driver (12V Supply).
+  * DC Steering Servo driven via STM32 PWM output (5V Supply).
 
 ---
 
-## 🗺️ System Architecture Graph
+## 2. Hardware Signal Inversion Circuit (BTS7960 Interface)
+Because the STM32F446RE operates at 3.3V logic and the BTS7960 requires higher high-level input thresholds, an NPN transistor level shifter / inverter circuit is used between the STM32 PWM output pins (`PA0`, `PA1`) and the driver inputs (`RPWM`, `LPWM`).
 
-This diagram illustrates our distributed Node graph, showing the flow of data from physical sensors, through the ROS 2 Humble network, and down to the hardware actuators.
+### Circuit Behavior & Logic Inversion
+* **STM32 Pin HIGH (3.3V)** → Transistor turns ON → Output pulled LOW (~0V).
+* **STM32 Pin LOW (0V)** → Transistor turns OFF → Output pulled HIGH (5V via 1kΩ resistor).
 
-```mermaid
-graph TD
-  %% Define Styles
-  classDef pi fill:#e83e8c,stroke:#fff,stroke-width:2px,color:#fff;
-  classDef stm fill:#0d6efd,stroke:#fff,stroke-width:2px,color:#fff;
-  classDef hardware fill:#6c757d,stroke:#fff,color:#fff;
-  classDef topic fill:#ffc107,stroke:#333,color:#000;
+![Circuit Schematic](doc/circuit_schematic.png)
 
-  subgraph PI4 [Raspberry Pi 4 - ROS 2 Humble]
-    subgraph Sensors_Pi [High-Bandwidth Hardware]
-      cam[Studica 3D Depth Cam]:::hardware
-      lidar[Studica 360 LiDAR 70500]:::hardware
-      imu[I2C IMU Sensor]:::hardware
-    end
+### Software Correction Formula
+To compensate for active-low signal inversion in software:
+$$\text{Output Compare Value (CCR)} = \text{Timer Period (ARR)} - \text{Target PWM Duty}$$
 
-    subgraph Drivers [ROS 2 Driver Nodes]
-      cam_node(camera_node):::pi
-      lidar_node(lidar_node):::pi
-      imu_node(imu_node):::pi
-    end
+---
 
-    subgraph Brain [WRO Autonomy Stack]
-      vision(wro_vision_node):::pi
-      state(wro_state_machine_node):::pi
-      nav(wro_nav_node):::pi
-    end
+## 3. Firmware Code Snippet (STM32 Control Logic)
 
-    agent(micro_ros_agent):::pi
-  end
+```c
+// Timer Period ARR = 4199 (20kHz PWM @ 84MHz clock)
+#define MAX_PWM 4199
 
-  subgraph STM32 [STM32 Nucleo-F446RE - FreeRTOS]
-    base_node(stm32_base_node):::stm
-    
-    subgraph Sensors_Actuators [Low-Level Hardware]
-      motor[BTS7960 Drive Motor]:::hardware
-      servo[Steering Servo]:::hardware
-      encoder[Hardware Encoder]:::hardware
-      us_ir[2x Ultrasonic & 2x IR Sensors]:::hardware
-    end
-  end
+void set_dc_motor_speed(int16_t speed) {
+    if (speed > MAX_PWM) speed = MAX_PWM;
+    if (speed < -MAX_PWM) speed = -MAX_PWM;
 
-  %% Pi 4 Internal Connections
-  cam --> cam_node
-  lidar --> lidar_node
-  imu --> imu_node
-
-  cam_node -- /camera/color/image_raw --> vision
-  lidar_node -- /scan --> nav
-  imu_node -- /imu/data --> nav
-  
-  vision -- /perception/lane_error <br/> /perception/obstacles --> nav
-  state -- /system/mission_state --> nav
-
-  %% The micro-ROS Bridge
-  nav -- /drive_motor_speed <br/> /servo_angle --> agent
-  agent <==>|USB / UART Bridge| base_node
-  agent -- /sensors/ultrasound <br/> /sensors/ir <br/> /sensors/encoder_ticks --> nav
-  
-  %% STM32 Internal Connections
-  us_ir --> base_node
-  encoder --> base_node
-  base_node --> motor
-  base_node --> servo
+    if (speed > 0) {
+        // Forward: Software duty cycle inverted for transistor stage
+        __HAL_TIM_SET_COMPARE(&htim2, TIM_CHANNEL_1, MAX_PWM - speed); // RPWM
+        __HAL_TIM_SET_COMPARE(&htim2, TIM_CHANNEL_2, MAX_PWM);         // LPWM OFF
+    } else if (speed < 0) {
+        // Reverse
+        __HAL_TIM_SET_COMPARE(&htim2, TIM_CHANNEL_1, MAX_PWM);         // RPWM OFF
+        __HAL_TIM_SET_COMPARE(&htim2, TIM_CHANNEL_2, MAX_PWM - (-speed)); // LPWM
+    } else {
+        // Brake / Stop (Both outputs OFF = 100% duty at STM32 pins)
+        __HAL_TIM_SET_COMPARE(&htim2, TIM_CHANNEL_1, MAX_PWM);
+        __HAL_TIM_SET_COMPARE(&htim2, TIM_CHANNEL_2, MAX_PWM);
+    }
+}
