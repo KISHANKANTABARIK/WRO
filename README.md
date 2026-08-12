@@ -1,6 +1,6 @@
 # Engineering Documentation - Team [Your Team Name]
 
-![Team Banner](./t-photos/team-banner.png)
+![Team Banner](./t-photos/team-banner.jpeg)
 
 ## Introduction
 
@@ -37,17 +37,17 @@ This has been an incredible journey with a lot of obstacles, and we have done ou
 
 - **[Member Name 1]**:
 
-![Member 1 photo](./t-photos/member1.png)
+![Member 1 photo](./t-photos/member1.jpg)
 > Hi, my name is Kishan Kanta Barik. I'm part of Team DeusMachina and I'm responsible for ROS2 Architecture & Embedded C . 
 
 - **[Member Name 2]**:
 
-![Member 2 photo](./t-photos/member2.png)
+![Member 2 photo](./t-photos/member2.jpeg)
 > My name is Swastik Prasad Behera. I am the team's Designer and I'm responsible for Mechanical Designing.
 
 - **[Member Name 3]**:
 
-![Member 3 photo](./t-photos/member3.png)
+![Member 3 photo](./t-photos/member3.jpeg)
 > I am Mohit Kumar Bera, the team's Electronics Engineering. I am in charge of Electronics circuits and wiring. 
 
 ---
@@ -135,15 +135,15 @@ For each component, include a short description of its role and a spec box.
 
 - **[Component 3 — e.g. Steering Servo]**: Role in the robot.
 
-- **[Component 4 — e.g. Main Microcontroller]**: Role in the robot.
+- **[Component 4 — e.g. Raspberry pi4 - Module B (4GB Ram)]**: Main Micro Processor.
 
-- **[Component 5 — e.g. Single-Board Computer]**: Role in the robot.
+- **[Component 5 — e.g. STM32466RE]**: Secondary microcontroller.
 
-- **[Component 6 — e.g. Distance Sensors]**: Role in the robot.
+- **[Component 6 — e.g. 2D 360 degree Lidar ]**: To measure and detect the object distance and real time objects.
 
-- **[Component 7 — e.g. Camera]**: Role in the robot.
+- **[Component 7 — e.g. Camera]**: Identify the colour of th object.
 
-- **[Component 8 — e.g. Batteries / Power Bank]**: Role in the robot.
+- **[Component 8 — e.g. Batteries]**: Power source of the vehicle.
 
 *(Add/remove entries to match your actual bill of materials.)*
 
