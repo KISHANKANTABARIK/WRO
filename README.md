@@ -78,7 +78,7 @@ Describe the final architecture (e.g. modular design with distinct functional la
 
 > Example: *The final design of the robot is intended as a modular design, consisting of N modules: [module 1 name/purpose], [module 2 name/purpose], [module 3 name/purpose]. This makes it easier to make repairs or replace/rearrange parts.*
 
-![Final structure](./schemes/final-structure.png)
+![Final structure](./schemes/final-structure.pdf)
 
 Link to the full 3D model/CAD files:
 [3D design files](./models)
