@@ -1,10 +1,10 @@
-# Engineering Documentation - Team [Your Team Name]
+# Engineering Documentation - Team DeusMachina
 
 ![Team Banner](./t-photos/team-banner.jpeg)
 
 ## Introduction
 
-In this repository you will find all the information related to the construction, design, and programming of the autonomous robot built by *Team [Your Team Name]* for the [Category Name, e.g. Future Engineers] category in the [Year] Season.
+In this repository you will find all the information related to the construction, design, and programming of the autonomous robot built by *Team DeusMachina* for the  Future Engineers category in the 2026 Season.
 This has been an incredible journey with a lot of obstacles, and we have done our best to come up with a design that we were not only satisfied with, but one that could properly accomplish all of the objectives present in this edition of the competition.
 
 ## Contents
@@ -35,19 +35,19 @@ This has been an incredible journey with a lot of obstacles, and we have done ou
 
 [#team-members](#team-members)
 
-- **[Member Name 1]**:
+- **[Kishan Kanta Barik]**:
 
 ![Member 1 photo](./t-photos/member1.jpg)
 > Hi, my name is Kishan Kanta Barik. I'm part of Team DeusMachina and I'm responsible for ROS2 Architecture & Embedded C . 
 
-- **[Member Name 2]**:
+- **[Swastik Prasad Behera]**:
 
 ![Member 2 photo](./t-photos/member2.jpeg)
 > My name is Swastik Prasad Behera. I am the team's Designer and I'm responsible for Mechanical Designing.
 
 - **[Member Name 3]**:
 
-![Member 3 photo](./t-photos/member3.jpeg)
+![Mohit Kumar Bera](./t-photos/member3.jpeg)
 > I am Mohit Kumar Bera, the team's Electronics Engineering. I am in charge of Electronics circuits and wiring. 
 
 ---
@@ -214,7 +214,7 @@ Tell your team's story: how you got started, key milestones, competitions attend
 
 ---
 
-# Thank You. Team [Your Team Name] - [Year].
+# Thank You. Team DeusMachina - 2026.
 
 ## Repository Structure
 
