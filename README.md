@@ -45,7 +45,7 @@ This has been an incredible journey with a lot of obstacles, and we have done ou
 ![Member 2 photo](./t-photos/member2.jpeg)
 > My name is Swastik Prasad Behera. I am the team's Designer and I'm responsible for Mechanical Designing.
 
-- **[Member Name 3]**:
+- **[Mohit Kumar Bera]**:
 
 ![Mohit Kumar Bera](./t-photos/member3.jpeg)
 > I am Mohit Kumar Bera, the team's Electronics Engineering. I am in charge of Electronics circuits and wiring. 
